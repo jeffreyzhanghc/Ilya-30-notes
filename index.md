@@ -182,7 +182,7 @@ body {
         <span class="tag">Empirical Analysis</span>
       </div>
       <div class="paper-links">
-        <a href="2024/12/16/scaling-laws.html" class="link-primary">
+        <a href="posts/scaling-laws.md" class="link-primary">
           Read Review
         </a>
         <a href="https://arxiv.org/abs/2001.08361" class="link-secondary" target="_blank" rel="noopener">
