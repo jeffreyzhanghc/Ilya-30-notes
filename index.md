@@ -26,7 +26,7 @@ layout: default
         <span class="tag">Downstream Task</span>
       </div>
       <div class="paper-links">
-        <a href="/posts/scaling-laws.html" class="link-primary">
+        <a href="{{ '/posts/scaling-laws.html' | relative_url }}" class="link-primary">
           Read Review
         </a>
         <a href="https://arxiv.org/abs/2001.08361" class="link-secondary" target="_blank" rel="noopener">
