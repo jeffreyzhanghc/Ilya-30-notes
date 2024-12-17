@@ -14,36 +14,36 @@ The study of scaling laws in large language models (LLMs) has evolved from under
 
 ## Core Mathematical Frameworks
 
+## Core Mathematical Frameworks
+
 ### 1. Pretraining Scaling Laws (Kaplan et al., 2020)
 
 The original scaling laws established three fundamental power-law relationships:
 
-1. **Model Size (N)**: 
-   $L \propto N^{-0.076}$
+1. **Model Size (N)**:
+   $$L \propto N^{-0.076}$$
    - Loss improves predictably with model size
    - Each doubling reduces loss by ~5.5%
 
 2. **Dataset Size (D)**:
-   $L \propto D^{-0.095}$
+   $$L \propto D^{-0.095}$$
    - Larger datasets consistently improve performance
    - Each doubling reduces loss by ~6.9%
 
 3. **Compute (C)**:
-   $L \propto C^{-0.050}$
+   $$L \propto C^{-0.050}$$
    - Performance scales smoothly with compute
    - Each doubling reduces loss by ~3.5%
 
 ### 2. Downstream Scaling Laws (Isik et al., 2024)
 
-The new research reveals more complex relationships for downstream tasks:
-
 1. **BLEU Score Scaling**:
-   $f(D_p) = (log(A \cdot D_p^{\alpha}))^{\beta}$
+   $$f(D_p) = (\log(A \cdot D_p^{\alpha}))^{\beta}$$
    - Logarithmic rather than power-law scaling
    - Depends strongly on distribution alignment
 
 2. **Downstream Cross-Entropy**:
-   $L(D_p) = E + \frac{A}{D_p^{\alpha}}$
+   $$L(D_p) = E + \frac{A}{D_p^{\alpha}}$$
    - Similar form to pretraining loss
    - More robust to distribution misalignment
 
