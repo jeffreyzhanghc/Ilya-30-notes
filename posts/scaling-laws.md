@@ -15,8 +15,6 @@ The study of scaling laws in large language models (LLMs) has evolved from under
 
 ## Core Mathematical Frameworks
 
-## Core Mathematical Frameworks
-
 ### 1. Pretraining Scaling Laws (Kaplan et al., 2020)
 
 The original scaling laws established three fundamental power-law relationships:
