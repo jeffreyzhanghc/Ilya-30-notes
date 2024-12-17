@@ -1,0 +1,40 @@
+@import "{{ site.theme }}";
+
+.post-list {
+  list-style: none;
+  padding: 0;
+  
+  .post-item {
+    margin-bottom: 2em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #eee;
+    
+    .post-title {
+      font-size: 1.5em;
+      margin-bottom: 0.3em;
+    }
+    
+    .post-meta {
+      color: #666;
+      font-size: 0.9em;
+    }
+    
+    .post-excerpt {
+      margin-top: 1em;
+    }
+  }
+}
+
+.tags {
+  margin-top: 0.5em;
+  
+  .tag {
+    display: inline-block;
+    padding: 0.2em 0.6em;
+    margin-right: 0.5em;
+    background: #f0f0f0;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #666;
+  }
+}
