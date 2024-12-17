@@ -4,69 +4,10 @@ layout: default
 
 <!-- Custom CSS -->
 <style>
-/* Modern type scale and colors */
-:root {
-  --primary: #2563eb;
-  --primary-dark: #1e40af;
-  --text-main: #1f2937;
-  --text-secondary: #4b5563;
-  --bg-paper: #ffffff;
-  --bg-subtle: #f8fafc;
-  --border: #e5e7eb;
-}
-
-/* Base styles */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: var(--text-main);
-  line-height: 1.6;
-}
-
-/* Container */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-/* Header section */
-.site-header {
-  text-align: center;
-  margin-bottom: 4rem;
-  padding: 3rem 0;
-  background: var(--bg-subtle);
-  border-bottom: 1px solid var(--border);
-}
-
-.site-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--text-main);
-  margin-bottom: 1rem;
-  letter-spacing: -0.025em;
-}
-
-.site-description {
-  font-size: 1.25rem;
-  color: var(--text-secondary);
-  max-width: 600px;
-  margin: 0 auto;
-}
-
 /* Paper cards */
 .paper-list {
   display: grid;
   gap: 2rem;
-}
-
-.paper-card {
-  background: var(--bg-paper);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
 }
 
 .paper-card:hover {
@@ -93,17 +34,6 @@ body {
   font-size: 0.875rem;
 }
 
-.paper-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--text-main);
-}
-
-.paper-description {
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-}
 
 /* Tags */
 .tag-list {
@@ -157,12 +87,11 @@ body {
 }
 </style>
 
-<header class="site-header">
-  <h1 class="site-title">Ilya Sutskever's Recommended Reading List Review</h1>
-  <p class="site-description">Blog recording some personal thoughts on Ilya's recommended reading, might compare some updated research with the perspective announced during the past, trying to have a foundamental comprehension on current stage AI</p>
-</header>
-
 <div class="container">
+    <header class="site-header">
+    <h1 class="site-title">Ilya Sutskever's Recommended Reading List Review</h1>
+    <p class="site-description">Blog recording some personal thoughts on Ilya's recommended reading, might compare some updated research with the perspective announced during the past, trying to have a foundamental comprehension on current stage AI</p>
+    </header>
   <div class="paper-list">
     <article class="paper-card">
       <div class="paper-meta">
