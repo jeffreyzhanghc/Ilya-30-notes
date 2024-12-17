@@ -1,61 +1,35 @@
 @import "{{ site.theme }}";
 
-.post-list {
-  list-style: none;
-  padding: 0;
-  
-  .post-item {
-    margin-bottom: 2em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid #eee;
-    
-    .post-title {
-      font-size: 1.5em;
-      margin-bottom: 0.3em;
-    }
-    
-    .post-meta {
-      color: #666;
-      font-size: 0.9em;
-    }
-    
-    .post-excerpt {
-      margin-top: 1em;
-    }
-  }
-}
-
-.tags {
-  margin-top: 0.5em;
-  
-  .tag {
-    display: inline-block;
-    padding: 0.2em 0.6em;
-    margin-right: 0.5em;
-    background: #f0f0f0;
-    border-radius: 3px;
-    font-size: 0.9em;
-    color: #666;
-  }
-}
-
-.post-content {
+.container {
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
-    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.6;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+    line-height: 1.7;
+    color: #2c3e50;
+    background: #f8f9fa;
+}
+
+.post {
+    background: white;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 h1 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    color: #2c3e50;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #eee;
 }
 
 h2 {
     font-size: 2rem;
-    margin-top: 2.5rem;
+    margin-top: 3rem;
     margin-bottom: 1.5rem;
     color: #34495e;
 }
@@ -66,38 +40,42 @@ h3 {
     color: #445566;
 }
 
+ul, ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    
+    li {
+        margin-bottom: 0.5rem;
+        
+        ul, ol {
+            margin-top: 0.5rem;
+        }
+    }
+}
+
+
 .math-block {
-    padding: 1rem;
     background: #f8f9fa;
-    border-radius: 4px;
-    margin: 1rem 0;
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin: 1.5rem 0;
     overflow-x: auto;
 }
 
-p {
-    margin-bottom: 1.2rem;
-    color: #333;
-}
 
-ul, ol {
-    margin-bottom: 1.2rem;
-    padding-left: 2rem;
-}
-
-li {
-    margin-bottom: 0.5rem;
-}
-
-code {
+pre {
     background: #f8f9fa;
-    padding: 0.2rem 0.4rem;
-    border-radius: 3px;
-    font-size: 0.9em;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
 }
 
-blockquote {
-    border-left: 4px solid #3498db;
-    margin: 1.5rem 0;
-    padding: 0.5rem 1rem;
-    background: #f8f9fa;
+
+a {
+    color: #3498db;
+    text-decoration: none;
+    
+    &:hover {
+        text-decoration: underline;
+    }
 }

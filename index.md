@@ -158,8 +158,8 @@ body {
 </style>
 
 <header class="site-header">
-  <h1 class="site-title">AI Paper Reviews</h1>
-  <p class="site-description">Deep dives into Ilya Sutskever's recommended papers, exploring the foundations of modern AI development</p>
+  <h1 class="site-title">Ilya Sutskever's Recommended Reading List Review</h1>
+  <p class="site-description">Blog recording some personal thoughts on Ilya's recommended reading, might compare some updated research with the perspective announced during the past, trying to have a foundamental comprehension on current stage AI</p>
 </header>
 
 <div class="container">
@@ -173,13 +173,13 @@ body {
         <span>OpenAI</span>
       </div>
       <h2 class="paper-title">Scaling Laws for Neural Language Models</h2>
-      <p class="paper-description">
-        A comprehensive empirical analysis establishing fundamental power-law relationships between model performance and computational resources. This work provides crucial insights into the scalability of language models and guides modern AI development strategies.
+      <p class="Summary">
+        A review of well-known paper introducing Scaling Law, also including the discussion regarding Test-Time Training and Scaling Law for Downstream Task. 
       </p>
       <div class="tag-list">
-        <span class="tag">Language Models</span>
-        <span class="tag">Deep Learning</span>
-        <span class="tag">Empirical Analysis</span>
+        <span class="tag">Scaling Law</span>
+        <span class="tag">Test-Time Training</span>
+        <span class="tag">Downstream Task</span>
       </div>
       <div class="paper-links">
         <a href="posts/scaling-laws.html" class="link-primary">

@@ -2,8 +2,9 @@
 layout: post
 title: "Understanding Scaling Laws for Neural Language Models"
 date: 2024-12-16
-author: Your Name
+author: Jeffrey Z
 categories: [Language Models, Deep Learning]
+math: true
 ---
 
 # Scaling Laws in Language Models: From Pretraining to Downstream Tasks
@@ -127,3 +128,12 @@ The synthesis of these works reveals that scaling behavior is more nuanced than 
 1. Kaplan, J., McCandlish, S., Henighan, T., Brown, T. B., Chess, B., Child, R., ... & Amodei, D. (2020). Scaling laws for neural language models. arXiv preprint arXiv:2001.08361.
 
 2. Isik, B., Ponomareva, N., Hazimeh, H., Paparas, D., Vassilvitskii, S., & Koyejo, S. (2024). Scaling Laws for Downstream Task Performance of Large Language Models. arXiv preprint arXiv:2402.04177.
+
+
+
+
+
+
+
+
+
