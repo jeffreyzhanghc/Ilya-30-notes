@@ -1,4 +1,3 @@
-baseurl: "/ilya-30-notes"
 plugins:
   - jekyll-remote-theme
 markdown: kramdown
