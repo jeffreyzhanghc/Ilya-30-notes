@@ -1,7 +1,7 @@
 ---
 ---
 
-@import "{{ site.theme }}";
+
 
 /* Colors */
 $parchment: #f5f1e6;
@@ -11,6 +11,12 @@ $ink-light: #594a42;
 $accent: #8b4513;
 $accent-dark: #6b3410;
 $shadow: rgba(44, 24, 16, 0.1);
+
+@import "{{ site.theme }}";
+.page-header {
+    background-color: $parchment-dark;
+    background-image: linear-gradient(120deg, $parchment-dark, $parchment);
+  }
 
 body {
     background: $parchment;
@@ -130,4 +136,32 @@ a {
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
     border: 1px solid rgba(139, 69, 19, 0.2);
+}
+
+.link-primary {
+    background: $accent;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    
+    &:hover {
+        background: $accent-dark;
+        color: white;
+        text-decoration: none;
+    }
+}
+
+.link-secondary {
+    background: $parchment;
+    color: $ink;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    
+    &:hover {
+        background: $parchment-dark;
+        color: $ink;
+        text-decoration: none;
+    }
 }
