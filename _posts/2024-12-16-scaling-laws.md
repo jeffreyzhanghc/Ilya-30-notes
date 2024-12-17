@@ -7,7 +7,6 @@ math: true
 permalink: /posts/scaling-laws.html
 ---
 
-# Scaling Laws in Language Models: From Pretraining to Downstream Tasks
 
 ## Introduction
 

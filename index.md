@@ -38,4 +38,7 @@ layout: default
     <!-- Template for future papers -->
     <!-- Copy the article.paper-card structure and update content -->
   </div>
+  <div style="text-align: right; font-size: 0.8em; margin-top: 2rem;">
+    Authored by <a href="https://github.com/jeffreyzhanghc">jeffreyzhanghc</a>
+  </div>
 </div>
