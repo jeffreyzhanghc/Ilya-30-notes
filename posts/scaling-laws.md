@@ -2,9 +2,9 @@
 layout: post
 title: "Understanding Scaling Laws for Neural Language Models"
 date: 2024-12-16
-author: Jeffrey Z
-categories: [Language Models, Deep Learning]
+author: Jeffrey Zhang
 math: true
+permalink: /posts/scaling-laws.html
 ---
 
 # Scaling Laws in Language Models: From Pretraining to Downstream Tasks
