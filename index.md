@@ -29,7 +29,6 @@ layout: default
         <a href="{{'/posts/llama-implementation.html'| relative_url }}" class="link-primary">
           Read Blog
         </a>
-        </a>
       </div>
     </article>
     <article class="paper-card">

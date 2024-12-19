@@ -50,34 +50,7 @@ Key features:
 - More computationally efficient than LayerNorm
 
 ### 2. Rotary Position Embeddings (RoPE)
-Implements rotary positional embeddings for sequence position encoding.
-
-```python
-class LlamaRotaryEmbedding(nn.Module):
-    def __init__(
-        self,
-        dim=None,
-        max_position_embeddings=2048,
-        base=10000,
-        device=None,
-        scaling_factor=1.0,
-        rope_type="default",
-        config: Optional[LlamaConfig] = None,
-    ):
-        super().__init__()
-        # Configuration setup
-        self.rope_kwargs = {}
-        if config is None:
-            self.rope_kwargs = {
-                "rope_type": rope_type,
-                "factor": scaling_factor,
-                "dim": dim,
-                "base": base,
-                "max_position_embeddings": max_position_embeddings,
-            }
-            self.rope_type = rope_type
-            self.max_seq_len_cached = max_position_embeddings
-```
+Implements rotary positional embeddings for sequence position encoding. The paper of RoPE can be found [here](https://arxiv.org/https://arxiv.org/pdf/2104.09864).
 
 Core RoPE functionality:
 ```python
