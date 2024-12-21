@@ -1,13 +1,11 @@
 ---
 layout: post
-title: "Annotated Transformer and Llama Implementation"
+title: "LLaMA Implementation Deep Dive"
 date: 2024-12-19
 author: Jeffrey Zhang
 math: true
 permalink: /posts/llama-implementation.html
 ---
-
-# LLaMA Implementation Analysis
 
 ## Overview
 This code represents the implementation of LLaMA (Large Language Model Meta AI) in the Hugging Face Transformers library. The implementation includes several key components working together to create an efficient and scalable language model.
