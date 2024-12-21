@@ -8,8 +8,6 @@ permalink: /posts/llama-implementation.html
 ---
 ## Table of Contents
 
-## Table of Contents
-
 1. [Overview](#overview)
 2. [Rotary Position Embeddings (RoPE)](#2-rotary-position-embeddings-rope)
 3. [Multi-Layer Perceptron](#3-multi-layer-perceptron)
