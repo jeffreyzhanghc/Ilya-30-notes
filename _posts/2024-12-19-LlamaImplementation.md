@@ -6,11 +6,23 @@ author: Jeffrey Zhang
 math: true
 permalink: /posts/llama-implementation.html
 ---
+## Table of Contents
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Rotary Position Embeddings (RoPE)](#2-rotary-position-embeddings-rope)
+3. [Multi-Layer Perceptron](#3-multi-layer-perceptron)
+4. [Attention Implementation](#4-attention-implementation)
+5. [DecodeLayer](#5-decodelayer)
+6. [Putting Together](#6-putting-together)
+7. [Extra: Implementation Details](#extra-then-how-does-the-generate-function-in-huggingface-work)
 
 ## Overview
 This code represents the implementation of LLaMA (Large Language Model Meta AI) in the Hugging Face Transformers library. The implementation includes several key components working together to create an efficient and scalable language model.
 
-## Key Components
+
+
 
 ### 1. LlamaRMSNorm
 RMS (Root Mean Square) Normalization layer, which is more efficient than traditional layer normalization.  
@@ -161,8 +173,8 @@ class LlamaMLP(nn.Module):
         return down_proj
 ```
 
-### 4. Llama Attention
-
+### 4. Attention Implementation
+Attention implementation is a key module in transformer, I will discuss normal implementation of masked multi-head attention here
 
 ```python
 class LlamaAttention(nn.Module):
@@ -206,8 +218,6 @@ Key attention computation:
         attn_output = torch.matmul(attn_weights, value_states)
 ```
 
-### 4. Attention Implementation
-Attention implementation is a key module in transformer, I will discuss normal implementation of masked multi-head attention here
 
 ```python
     def forward(
@@ -377,7 +387,7 @@ We can see the components of decode layer here, which include attention layer, M
 ```
 We can see here two residual connectino is performed, one around attention layer and one around MLP layer
 
-### 6. Putting Togther
+### 6. Putting Together
 Putting components together, the code snippet below represent core chunk of LlamaPretrained model:
 
 ```python
