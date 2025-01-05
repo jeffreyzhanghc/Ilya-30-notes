@@ -301,4 +301,7 @@ Looking ahead, DeepSeek v3 opens several promising research directions:
 - Further inference speed improvements
 
 
+## References
+
+1. DeepSeek-AI (2025). DeepSeek-V3 Technical Report. In arXiv. research@deepseek.com
 
