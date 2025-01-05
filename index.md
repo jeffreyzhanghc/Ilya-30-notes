@@ -12,9 +12,7 @@ layout: default
       <div class="paper-meta">
         <span>Jan 2, 2025</span>
         <span>•</span>
-        <span>Technical Deep Dive</span>
-        <span>•</span>
-        <span>Jeffrey Zhang</span>
+        <span>DeepSeek AI</span>
       </div>
       <h2 class="paper-title">DeepSeek v3 Paper Deep Dive</h2>
       <p class="Summary">
