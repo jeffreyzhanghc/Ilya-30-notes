@@ -8,6 +8,27 @@ layout: default
     <p class="site-description">Blog recording some personal thoughts on Ilya's recommended reading, might compare some updated research with the perspective announced during the past, trying to have a foundamental comprehension on current stage AI</p>
     </header>
   <div class="paper-list">
+  <article class="paper-card">
+      <div class="paper-meta">
+        <span>Jan 5, 2025</span>
+        <span>•</span>
+        <span>.</span>
+        <span>•</span>
+        <span></span>
+      </div>
+      <h2 class="paper-title">DeepSeek V3 Paper Explained</h2>
+      <p class="Summary">
+        A deep dive of implementation of technologies in paper DeepSeek V3
+      </p>
+      <div class="tag-list">
+        <span class="tag">DeepSeek-v3</span>
+      </div>
+      <div class="paper-links">
+        <a href="{{'/posts/deepseekv3.html'| relative_url }}" class="link-primary">
+          Read Blog
+        </a>
+      </div>
+    </article>
       <article class="paper-card">
       <div class="paper-meta">
         <span>December 19, 2024</span>
