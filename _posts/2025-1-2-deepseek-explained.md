@@ -33,7 +33,7 @@ permalink: /posts/deepseekv3.html
 ## Architecture Overview
 ### DeepSeek v2 Background
 #### Multi-head Latent Attention
-![alt text](image.png)
+![alt text]({{ '/assets/images/image.png' | relative_url }})
 DeepSeek leverages the power of multi-head attention instead of traditional multi-head attention to reduce the heavy KV cache that limits the maximum batch size and sequence length. Since the normal multi-head attention includes the following elements:
 
 $$\mathbf{q}_t$$, $$\mathbf{k}_t$$, $$\mathbf{v}_t$$ is first computed by multiplying the corresponding weight matrix with inputs, and then they  will be sliced into $n_h$ heads for the multi-head attention computation:
