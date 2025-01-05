@@ -30,6 +30,7 @@ permalink: /posts/deepseekv3.html
 
 
 
+## Architecture Overview
 ### DeepSeek v2 Background
 #### Multi-head Latent Attention
 ![alt text](image.png)
@@ -60,10 +61,10 @@ $$\mathbf{v}_t^C = W^{UV}\mathbf{c}_t^{KV},\tag{8}$$
 
 where:
 
-- $\mathbf{c}_t^{KV} \in \mathbb{R}^{d_c}$ is the compressed shared latent vector for both keys and values
-- $d_c$ is the compression dimension, which is much smaller than $d_hn_h$
-- $W^{DKV} \in \mathbb{R}^{d_c \times d}$ is the down-projection matrix
-- $W^{UK}, W^{UV} \in \mathbb{R}^{d_hn_h \times d_c}$ are up-projection matrices for keys and values
+- $$\mathbf{c}_t^{KV} \in \mathbb{R}^{d_c}$$ is the compressed shared latent vector for both keys and values
+- $$d_c$$ is the compression dimension, which is much smaller than $d_hn_h$
+- $$W^{DKV} \in \mathbb{R}^{d_c \times d}$$ is the down-projection matrix
+- $$W^{UK}, W^{UV} \in \mathbb{R}^{d_hn_h \times d_c}$$ are up-projection matrices for keys and values
 
 Now we only need to cache $d_cl$ elements, where l is the number of layers.
 
@@ -182,13 +183,13 @@ s_{i,t}, & s_{i,t} \in \text{Topk}(\{s_{j,t}|1 \leq j \leq N_r\}, K_r), \\
 $$s_{i,t} = \text{Sigmoid}(\mathbf{u}_t^T\mathbf{e}_i),\tag{12}$$
 
 where:
-- $N_s$ and $N_r$ denote the numbers of shared experts and routed experts respectively
-- $\text{FFN}_i^{(s)}(\cdot)$ and $\text{FFN}_i^{(r)}(\cdot)$ represent the $i$-th shared expert and routed expert functions
-- $K_r$ specifies how many routed experts are activated per token
-- $g_{i,t}$ is the normalized gating value (importance weight) for the $i$-th expert for token $t$
-- $s_{i,t}$ represents how well token $t$ matches with expert $i$ (token-to-expert affinity)
-- $\mathbf{e}_i$ is the learned centroid vector for the $i$-th routed expert
-- $\text{Topk}(\cdot, K)$ selects the $K$ highest affinity scores among all routed experts for a given token
+- $$N_s$$ and $$N_r$$ denote the numbers of shared experts and routed experts respectively
+- $$\text{FFN}_i^{(s)}(\cdot)$$ and $$\text{FFN}_i^{(r)}(\cdot)$$ represent the $i$-th shared expert and routed expert functions
+- $$K_r$$ specifies how many routed experts are activated per token
+- $$g_{i,t}$$ is the normalized gating value (importance weight) for the $i$-th expert for token $t$
+- $$s_{i,t}$$ represents how well token $t$ matches with expert $$i$$ (token-to-expert affinity)
+- $$\mathbf{e}_i$$ is the learned centroid vector for the $$i$$-th routed expert
+- $$\text{Topk}(\cdot, K)$$ selects the $K$ highest affinity scores among all routed experts for a given token
 
 Key Difference from DeepSeek-V2:
 - Uses sigmoid function instead of softmax for computing affinity scores
@@ -218,9 +219,9 @@ Key Features:
 - Bias terms only affect routing decisions, not final gating values
 - Original affinity scores $s_{i,t}$ still determine expert weights
 - Dynamic adjustment during training:
- - Decrease bias by $\gamma$ for overloaded experts
- - Increase bias by $\gamma$ for underloaded experts
- - $\gamma$ is a hyperparameter controlling bias update speed
+ - Decrease bias by $$\gamma$$ for overloaded experts
+ - Increase bias by $$\gamma$$ for underloaded experts
+ - $$\gamma$$ is a hyperparameter controlling bias update speed
 
 Benefits:
 - Maintains balanced expert utilization during training
@@ -255,7 +256,7 @@ Several techniques reduce memory footprint:
 - CPU-based EMA parameter storage
 - Shared embedding and output layers for MTP modules
 
-## Training Approach
+## Training Implementation
 
 ### FP8 Training Innovation
 
