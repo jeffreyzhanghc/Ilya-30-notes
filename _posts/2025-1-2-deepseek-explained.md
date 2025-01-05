@@ -8,21 +8,29 @@ permalink: /posts/deepseekv3.html
 ---
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Rotary Position Embeddings (RoPE)](#2-rotary-position-embeddings-rope)
-3. [Multi-Layer Perceptron](#3-multi-layer-perceptron)
-4. [Attention Implementation](#4-attention-implementation)
-5. [DecodeLayer](#5-decodelayer)
-6. [Putting Together](#6-putting-together)
-7. [Extra: Implementation Details](#extra-then-how-does-the-generate-function-in-huggingface-work)
+1. [Architecture Overview](#architecture-overview)
+   - [DeepSeek v2 Background](#deepseek-v2-background)
+     - [Multi-head Latent Attention](#multi-head-latent-attention)
+     - [Decoupled RoPE](#decoupled-rope)
+     - [MOE Architecture](#moe-architecture)
+     - [DeepSeek MOE](#deepseek-moe)
+   - [DeepSeek v3 Innovations](#deepseek-v3-innovations)
+     - [MOE Architecture](#moe-architecture-v3)
+     - [Auxiliary-Loss-Free Load Balancing](#auxiliary-loss-free-load-balancing)
+2. [Engineering Optimizations](#engineering-optimizations)
+   - [Pipeline Parallelism](#pipeline-parallelism)
+   - [Communication Optimization](#communication-optimization)
+   - [Memory Management](#memory-management)
+3. [Training Implementation](#training-implementation)
+   - [FP8 Training Innovation](#fp8-training-innovation)
+   - [Pre-training Details](#pre-training-details)
+   - [Post-Training Refinement](#post-training-refinement)
+4. [Performance and Benchmarks](#performance-and-benchmarks)
+5. [Future Directions](#future-directions)
 
-## Overview
-This code represents the implementation of LLaMA (Large Language Model Meta AI) in the Hugging Face Transformers library. The implementation includes several key components working together to create an efficient and scalable language model.
 
 
-
-
-### Brief Overview about DeepSeek v2
+### DeepSeek v2 Background
 #### Multi-head Latent Attention
 ![alt text](image.png)
 DeepSeek leverages the power of multi-head attention instead of traditional multi-head attention to reduce the heavy KV cache that limits the maximum batch size and sequence length. Since the normal multi-head attention includes the following elements:
@@ -156,8 +164,141 @@ The key difference from conventional MoE is that DeepSeekMoE focuses on maximizi
 This contrasts with traditional MoE architectures that typically use larger, more general-purpose experts and simpler routing strategies.
 
 
+### DeepSeek V3
+#### MOE Architecture
+For Feed-Forward Networks (FFNs), DeepSeek-V3 employs the DeepSeekMoE architecture (Dai et al., 2024). Compared with traditional MoE architectures like GShard (Lepikhin et al., 2021), DeepSeekMoE uses finer-grained experts and isolates some experts as shared ones. 
+
+Let $\mathbf{u}_t$ denote the FFN input of the $t$-th token, we compute the FFN output $\mathbf{h}_t'$ as follows:
+
+$$\mathbf{h}_t' = \mathbf{u}_t + \sum_{i=1}^{N_s} \text{FFN}_i^{(s)}(\mathbf{u}_t) + \sum_{i=1}^{N_r} g_{i,t}\text{FFN}_i^{(r)}(\mathbf{u}_t),\tag{9}$$
+
+$$g_{i,t} = \frac{g_{i,t}'}{\sum_{j=1}^{N_r} g_{j,t}'},\tag{10}$$
+
+$$g_{i,t}' = \begin{cases} 
+s_{i,t}, & s_{i,t} \in \text{Topk}(\{s_{j,t}|1 \leq j \leq N_r\}, K_r), \\
+0, & \text{otherwise},
+\end{cases}\tag{11}$$
+
+$$s_{i,t} = \text{Sigmoid}(\mathbf{u}_t^T\mathbf{e}_i),\tag{12}$$
+
+where:
+- $N_s$ and $N_r$ denote the numbers of shared experts and routed experts respectively
+- $\text{FFN}_i^{(s)}(\cdot)$ and $\text{FFN}_i^{(r)}(\cdot)$ represent the $i$-th shared expert and routed expert functions
+- $K_r$ specifies how many routed experts are activated per token
+- $g_{i,t}$ is the normalized gating value (importance weight) for the $i$-th expert for token $t$
+- $s_{i,t}$ represents how well token $t$ matches with expert $i$ (token-to-expert affinity)
+- $\mathbf{e}_i$ is the learned centroid vector for the $i$-th routed expert
+- $\text{Topk}(\cdot, K)$ selects the $K$ highest affinity scores among all routed experts for a given token
+
+Key Difference from DeepSeek-V2:
+- Uses sigmoid function instead of softmax for computing affinity scores
+- Applies normalization only among selected experts' affinity scores to get final gating values
 
 
+#### Auxiliary-Loss-Free Load Balancing
+
+DeepSeek-V3 introduces a novel approach to handle the load balancing problem in MoE models:
+
+**The Problem:**
+- Unbalanced expert load leads to:
+ - Routing collapse (over-reliance on few experts)
+ - Reduced computational efficiency in parallel processing
+- Traditional solutions use auxiliary loss functions, but these can hurt model performance if weighted too heavily
+
+**The Solution: Dynamic Bias Adjustment**
+
+Instead of using auxiliary loss functions, DeepSeek-V3 introduces a bias term $b_i$ for each expert that modifies routing decisions:
+
+$$g_{i,t}' = \begin{cases}
+s_{i,t}, & s_{i,t} + b_i \in \text{Topk}(\{s_{j,t} + b_j|1 \leq j \leq N_r\}, K_r), \\
+0, & \text{otherwise}.
+\end{cases}\tag{13}$$
+
+Key Features:
+- Bias terms only affect routing decisions, not final gating values
+- Original affinity scores $s_{i,t}$ still determine expert weights
+- Dynamic adjustment during training:
+ - Decrease bias by $\gamma$ for overloaded experts
+ - Increase bias by $\gamma$ for underloaded experts
+ - $\gamma$ is a hyperparameter controlling bias update speed
+
+Benefits:
+- Maintains balanced expert utilization during training
+- Improves performance compared to auxiliary loss methods
+- Avoids the performance penalties of auxiliary loss functions
+- Provides more direct control over load balancing
+
+
+## Engineering Optimizations
+
+### Pipeline Parallelism
+
+The innovative DualPipe strategy:
+- Bidirectional pipeline design
+- Micro-batch processing from both pipeline ends
+- Reduced pipeline bubbles
+- Improved GPU utilization
+- Fine-grained chunk scheduling
+
+### Communication Optimization
+
+Advanced communication strategies include:
+- Node-Limited Routing (max 4 nodes per token)
+- Customized All-to-All communication kernels
+- Bandwidth optimization for Infiniband and NVLink
+- Dynamic Warp allocation for communication tasks
+
+### Memory Management
+
+Several techniques reduce memory footprint:
+- RMSNorm and MLA up-projection recomputation
+- CPU-based EMA parameter storage
+- Shared embedding and output layers for MTP modules
+
+## Training Approach
+
+### FP8 Training Innovation
+
+DeepSeek v3 implements sophisticated mixed-precision training:
+- FP8 for core computations
+- BF16/FP32 for sensitive components
+- Tile-wise (1x128) activation quantization
+- Block-wise (128x128) weight quantization
+- High-precision accumulation in FP32 registers
+
+### Pre-training Details
+
+The model was trained on 14.8T tokens with:
+- Enhanced mathematical and programming content ratio
+- Expanded multilingual coverage
+- Document packing method for context preservation
+- Fill-in-Middle (FIM) strategy for code understanding
+- 128K token vocabulary with byte-level BPE
+
+### Post-Training Refinement
+
+The post-training process includes:
+- Supervised Fine-Tuning on 1.5M instances
+- Rule-based and model-based reward models
+- Group Relative Policy Optimization (GRPO)
+- Advanced alignment techniques
+
+## Performance and Benchmarks
+
+DeepSeek v3 demonstrates exceptional performance across various benchmarks:
+- Strong results on MMLU, MMLU-Pro, and GPQA-Diamond
+- Superior performance in mathematical reasoning (MATH 500, AIME 2024)
+- Competitive results against GPT-4 and Claude-3.5-Sonnet
+- Cost-effective training (approximately $5.5M using H800 GPUs)
+
+## Future Directions
+
+Looking ahead, DeepSeek v3 opens several promising research directions:
+- Enhanced expert utilization strategies
+- Improved load balancing techniques
+- Advanced parallel training optimizations
+- Reduced deployment unit size
+- Further inference speed improvements
 
 
 
